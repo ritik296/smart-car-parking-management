@@ -1,0 +1,81 @@
+{{>bootstraphead}}
+  <body onload="myfunc()">
+
+    <div class="main">
+      <div class="layout">
+        <div class="sidebar">
+          <div class="logo">
+            <h6 class="text-light">Car App</h6>
+            <hr />
+          </div>
+          <div class="menu">
+           
+              {{>adminsidebar}}
+          
+          </div>
+        </div>
+        <div class="content">
+          <div class="header">
+            <div class="header-content">
+               
+
+              <a href="/profile">{{email}}</a>
+            </div>
+          </div>
+          <div class="body">
+
+            <h1>Slots Page</h1>
+            <br>
+             <a href="/addslots" class="btn btn-primary">Add a Slot</a>
+   <br><br>
+     <table class="table table-striped">
+           <thead>
+              <tr>
+                <th>Slot Number</th>
+                <th>Slot Price (in Rs.)</th>
+                <th>Vehicle Type</th>
+                <th>Update</th>
+                <th>Delete</th>
+              </tr>
+           </thead>
+        <tbody id="tabledata">
+          
+           
+        </tbody>
+    </table>
+
+    
+          </div>
+
+        </div>
+      </div>
+    </div>
+   
+ </body>
+  {{>bootstrapscripts}}
+  <script>
+    const myfunc=async()=>{
+          
+          const tabledata = document.getElementById('tabledata')
+          let p = await fetch('http://localhost:9000/slotsapi')
+          let parsedata = await p.json()
+
+          let result = ''
+
+          for(let i = 0; i<parsedata.length;i++){
+           let id = parsedata[i]._id
+           let number = `${parsedata[i].slotsnumber}`
+            result+=`<tr>
+                <td>${parsedata[i].slotsnumber}</td>
+                <th>${parsedata[i].slotsprice}</th>
+                
+                <th>${parsedata[i].slotsvehicletype}</th>
+                <td><form action='/delete-doctor/${id}' method='post'><button class='btn btn-primary'>Update</button></form></td>
+                <td><form action='/delete-slot/${id}' method='post'><button class='btn btn-danger'>Delete</button></form></td>
+            </tr>`
+          }
+          tabledata.innerHTML = result
+    }
+  </script>
+  {{>sidebarstyle}}
+  </html>

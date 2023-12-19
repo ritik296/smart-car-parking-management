@@ -1,0 +1,75 @@
+{{>bootstraphead}}
+
+<body>
+    <div class="main">
+        <div class="layout">
+            <div class="sidebar">
+                <div class="logo">
+                    <h6 class="text-light">Car APP</h6>
+                    <hr />
+                </div>
+                <div class="menu">
+
+                    {{>adminsidebar}}
+
+                </div>
+            </div>
+            <div class="content">
+                <div class="header">
+                    <div class="header-content">
+
+
+                        <a href="/profile">{{email}}</a>
+                    </div>
+                </div>
+                <div class="body">
+
+                    <h2 class="page-title">Add a Slot</h2>
+
+                    <a class="btn btn-primary" href="/slots">Back to Slots Page</a>
+                    <br><br>
+
+                    <form action="/addslots" method="post">
+                        <br>
+                        <div class="form-group">
+                            <label for="">Slot Number</label>
+                            <input class="form-control" type="text" name="slotsnumber" value=""
+                                placeholder="Enter slot number" required>
+                        </div>
+                        <br>
+
+                        <div class="form-group">
+                            <label for="">Slot Price (in Rs.)</label>
+                            <input class="form-control" type="text" name="slotsprice" value=""
+                                placeholder="Enter slots price" required>
+                        </div>
+
+                        <br>
+
+                        <div class="form-group">
+                            <label for="">vehicle Type</label>
+                            <select id="cars" name="slotsvehicletype">
+                                <option value="Car">car</option>
+                                <option value="Bike">Bike</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="">Description</label>
+                            <textarea class="form-control" name="slotsdescription" cols="10" rows="7"></textarea>
+                        </div>
+
+
+                        <br>
+                        <button class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+{{>bootstrapscripts}}
+{{>sidebarstyle}}
+
+</html>

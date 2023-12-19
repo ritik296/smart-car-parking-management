@@ -1,0 +1,89 @@
+{{>bootstraphead}}
+
+<body onload="myfunc()">
+  <div class="main">
+    <div class="layout">
+      <div class="sidebar">
+        <div class="logo">
+          <h6 class="text-light">Car App</h6>
+          <hr />
+        </div>
+        <div class="menu">
+
+          {{>adminsidebar}}
+
+        </div>
+      </div>
+      <div class="content">
+        <div class="header">
+          <div class="header-content">
+
+
+
+            <a href="/profile">{{email}}</a>
+          </div>
+        </div>
+        <div class="body">
+
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Parking Slots</h5>
+              <p class="card-text">Enter Slots and Their price according to vehicle type and place</p>
+              <a href="/slots" class="btn btn-primary">Enter Slots</a>
+            </div>
+          </div>
+<br>
+          <h1>Booking Status </h1>
+               <table class="table table-striped">
+           <thead>
+              <tr>
+                <th>Username</th>
+                <th>UserPhoneNo</th>
+                <th>SlotNumber</th>
+                <th>SlotPrice</th>
+                <th>SlotType</th>
+                <th>SlotStatus</th>
+                <th>UpdateStatus</th>
+              </tr>
+           </thead>
+        <tbody id="tabledata">
+          
+           
+        </tbody>
+    </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+  <script>
+
+      const myfunc = async()=>{
+           const tabledata = document.getElementById('tabledata')
+      const p = await fetch(`http://localhost:9000/bookingapi`)
+      let parsedata = await p.json()
+      
+      let result = ''
+      for(let i=0;i<parsedata.length;i++)
+      {
+         let id = parsedata[i]._id
+          result+=`<tr>
+                <td>${parsedata[i].user}</td>
+                <td>${parsedata[i].userphone}</td>
+                <td>${parsedata[i].bookingnumber}</td>
+                <td>${parsedata[i].bookingprice}</td>
+                <td>${parsedata[i].bookingvehicletype}</td>
+                <td>${parsedata[i].bookingstatus}<td>
+                <td>
+                  <form action='/approve-booking/${id}' method='post'><button class='btn btn-primary'>Approve</button></form><form action='/reject-booking/${id}' method='post'><button class='btn btn-danger'>Reject</button></form></td>
+                <td><form action='/delete-booking/${id}' method='post'><button class='btn btn-danger'>Delete</button></form></td>
+            </tr>`
+      }
+
+      tabledata.innerHTML=result
+      }
+    </script>
+{{>bootstrapscripts}}
+{{>sidebarstyle}}
+
+</html>

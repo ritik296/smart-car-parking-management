@@ -1,0 +1,59 @@
+{{>bootstraphead}}
+  <body onload="myfunc('{{id1}}')">
+   <div class="main">
+        <div class="layout">
+          <div class="sidebar">
+            <div class="logo">
+              <h6 class="text-light">Car App</h6>
+              <hr />
+            </div>
+            <div class="menu">
+             
+                {{>sidebar}}
+            
+            </div>
+          </div>
+          <div class="content">
+            <div class="header">
+              <div class="header-content">
+                 
+
+                <a href="/profile">{{email}}</a>
+              </div>
+            </div>
+            <div class="body" id="container">
+             
+             
+             
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+   <script>
+
+    const myfunc= async(id)=>{
+        const container = document.getElementById('container')
+        const p = await fetch(`http://localhost:9000/slotsapi/${id}`)
+         let parsedata = await p.json()
+       
+        container.innerHTML=`
+         Slot Number: ${parsedata[0].slotsnumber}
+      <br>
+         slot price(Per hr.) : ${parsedata[0].slotsprice} Rs
+      <br>
+        slot vehicle type : ${parsedata[0].slotsvehicletype}
+      <br>
+      slot description : ${parsedata[0].slotsdescription}
+      <br>
+       <form action="/slotbook/${parsedata[0]._id}" method="post">
+             <br>
+             <button class="btn btn-primary" type="submit" value="Buy">Book</button>
+             </form>
+      `       
+    }
+   </script>
+{{>bootstrapscripts}}
+{{>sidebarstyle}}
+</html>

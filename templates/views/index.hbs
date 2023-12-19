@@ -1,0 +1,68 @@
+{{>bootstraphead}}
+  <body onload="myfunc()">
+   <div class="main">
+        <div class="layout">
+          <div class="sidebar">
+            <div class="logo">
+              <h6 class="text-light">Car App</h6>
+              <hr />
+            </div>
+            <div class="menu">
+             
+                {{>sidebar}}
+            
+            </div>
+          </div>
+          <div class="content">
+            <div class="header">            
+              <div class="header-content">
+                
+                 
+
+                <a href="/profile">{{email}}</a>
+              </div>
+            </div>
+            <div class="body"> 
+               <h1> Parking Slots</h1>
+                    <div class="container">
+                        <div class="row" id="rowdata">
+
+                        </div>
+                    </div>
+           <br>
+           <b>{{bookingstatus}}</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+    <script>
+
+      const myfunc = async()=>{
+            const rowdata = document.getElementById('rowdata')
+        let p = await fetch('http://localhost:9000/slotsapi')
+        let parsedata = await p.json()
+       
+        let results = ''
+        for (let i = 0; i < parsedata.length; i++) {
+            results += `
+            <div class="col-md-4">
+             <div class="card" style="width: 18rem;">
+  <img src="https://img.freepik.com/free-photo/sports-car-races-through-dark-blurred-motion-generative-ai_188544-12490.jpg?size=626&ext=jpg&ga=GA1.1.1413502914.1697068800&semt=ais" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Slot Number ${parsedata[i].slotsnumber}</h5>
+    <h5 class="card-title">${parsedata[i].slotsprice} Rs</h5>
+    <h5 class="card-title">(Parking For)-${parsedata[i].slotsvehicletype}</h5>
+    <p class="card-text">${parsedata[i].slotsdescription}</p> 
+    <a href="/slotbook/${parsedata[i]._id}" class="btn btn-primary">Book</a>
+  </div>
+</div>
+            </div>
+            `
+        }
+     rowdata.innerHTML=results
+      }
+    </script>
+{{>bootstrapscripts}}
+{{>sidebarstyle}}
+</html>
